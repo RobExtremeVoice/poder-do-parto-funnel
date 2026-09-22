@@ -11,3 +11,18 @@ Repositório único das landing pages do funil O Poder do Parto.
 - `/guia/obrigado` — confirmação do Guia
 
 A rota raiz `/` redireciona para `/aula`.
+
+## Desenvolvimento
+
+```bash
+npm install
+npm run dev
+```
+
+## Produção
+
+```bash
+npm run build
+```
+
+O projeto usa Vite, TanStack Start, React e Tailwind CSS.
