@@ -99,7 +99,7 @@ function trackedCheckout(base = CHECKOUT) {
 }
 
 function CTA() {
-  return <Button asChild className="h-auto w-full max-w-xl whitespace-normal rounded-md bg-success px-6 py-4 text-center text-base font-extrabold uppercase text-success-foreground shadow-lg transition hover:-translate-y-1 hover:bg-success/90 sm:text-lg"><a href="#planos">Quero me preparar para o meu parto!</a></Button>;
+  return <Button asChild className="h-auto w-full max-w-xl whitespace-normal rounded-md bg-success px-6 py-4 text-center text-base font-extrabold uppercase text-black shadow-lg transition hover:-translate-y-1 hover:bg-success/90 hover:text-black sm:text-lg"><a href="#planos">Quero me preparar para o meu parto!</a></Button>;
 }
 
 function Index() {
