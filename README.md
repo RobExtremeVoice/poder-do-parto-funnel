@@ -26,3 +26,7 @@ npm run build
 ```
 
 O projeto usa Vite, TanStack Start, React e Tailwind CSS.
+
+## Deploy
+
+Projeto conectado à Vercel para publicação automática da branch `main`.
