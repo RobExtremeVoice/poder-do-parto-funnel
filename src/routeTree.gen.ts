@@ -14,6 +14,7 @@ import { Route as AulaRouteImport } from './routes/aula'
 import { Route as AulaOfferRouteImport } from './routes/aula-offer'
 import { Route as GuiaRouteImport } from './routes/guia'
 import { Route as OfertaRouteImport } from './routes/oferta'
+import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as GuiaObrigadoRouteImport } from './routes/guia.obrigado'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const OfertaRoute = OfertaRouteImport.update({
   path: '/oferta',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GuiaObrigadoRoute = GuiaObrigadoRouteImport.update({
   id: '/obrigado',
   path: '/obrigado',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/aula-offer': typeof AulaOfferRoute
   '/guia': typeof GuiaRouteWithChildren
   '/oferta': typeof OfertaRoute
+  '/quiz': typeof QuizRoute
   '/guia/obrigado': typeof GuiaObrigadoRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/aula-offer': typeof AulaOfferRoute
   '/guia': typeof GuiaRouteWithChildren
   '/oferta': typeof OfertaRoute
+  '/quiz': typeof QuizRoute
   '/guia/obrigado': typeof GuiaObrigadoRoute
 }
 export interface FileRoutesById {
@@ -70,14 +78,28 @@ export interface FileRoutesById {
   '/aula-offer': typeof AulaOfferRoute
   '/guia': typeof GuiaRouteWithChildren
   '/oferta': typeof OfertaRoute
+  '/quiz': typeof QuizRoute
   '/guia/obrigado': typeof GuiaObrigadoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/aula' | '/aula-offer' | '/guia' | '/oferta' | '/guia/obrigado'
+    | '/'
+    | '/aula'
+    | '/aula-offer'
+    | '/guia'
+    | '/oferta'
+    | '/quiz'
+    | '/guia/obrigado'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/aula' | '/aula-offer' | '/guia' | '/oferta' | '/guia/obrigado'
+  to:
+    | '/'
+    | '/aula'
+    | '/aula-offer'
+    | '/guia'
+    | '/oferta'
+    | '/quiz'
+    | '/guia/obrigado'
   id:
     | '__root__'
     | '/'
@@ -85,6 +107,7 @@ export interface FileRouteTypes {
     | '/aula-offer'
     | '/guia'
     | '/oferta'
+    | '/quiz'
     | '/guia/obrigado'
   fileRoutesById: FileRoutesById
 }
@@ -94,6 +117,7 @@ export interface RootRouteChildren {
   AulaOfferRoute: typeof AulaOfferRoute
   GuiaRoute: typeof GuiaRouteWithChildren
   OfertaRoute: typeof OfertaRoute
+  QuizRoute: typeof QuizRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -133,6 +157,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OfertaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guia/obrigado': {
       id: '/guia/obrigado'
       path: '/obrigado'
@@ -159,6 +190,7 @@ const rootRouteChildren: RootRouteChildren = {
   AulaOfferRoute: AulaOfferRoute,
   GuiaRoute: GuiaRouteWithChildren,
   OfertaRoute: OfertaRoute,
+  QuizRoute: QuizRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

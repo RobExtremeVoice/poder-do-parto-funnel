@@ -263,3 +263,45 @@ img {
     radial-gradient(60% 50% at 85% 0%, color-mix(in oklab, var(--color-brand-soft) 90%, transparent), transparent 70%),
     radial-gradient(50% 40% at 0% 20%, color-mix(in oklab, var(--color-brand-soft) 70%, transparent), transparent 70%);
 }
+
+/*
+ * Quiz (/quiz): tema próprio, isolado em .quiz-theme.
+ * Redefine os tokens semânticos só dentro do quiz para manter o visual original
+ * (roxo #7A239B, Playfair Display) sem alterar as páginas de venda.
+ */
+.quiz-theme {
+  --radius: 0.875rem;
+  --background: oklch(0.995 0.004 315);
+  --foreground: oklch(0.19 0.047 315);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.19 0.047 315);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.19 0.047 315);
+  --primary: oklch(0.48 0.22 315);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.97 0.018 316);
+  --secondary-foreground: oklch(0.28 0.07 315);
+  --muted: oklch(0.96 0.014 315);
+  --muted-foreground: oklch(0.48 0.035 315);
+  --accent: oklch(0.88 0.065 315);
+  --accent-foreground: oklch(0.32 0.13 315);
+  --lavender: oklch(0.95 0.034 315);
+  --destructive: oklch(0.58 0.23 28);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.89 0.027 315);
+  --input: oklch(0.89 0.027 315);
+  --ring: oklch(0.55 0.2 315);
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* --font-display é literal no @theme; por isso o override é por seletor. */
+.quiz-theme .font-display { font-family: "Playfair Display", serif; }
+.quiz-theme .bg-brand-gradient { background: linear-gradient(135deg, oklch(0.48 0.22 315), oklch(0.61 0.2 316)); }
+.quiz-theme .bg-quiz-wash { background-image: linear-gradient(150deg, var(--background) 15%, var(--lavender) 100%); }
+.quiz-theme .shadow-brand { box-shadow: 0 16px 34px color-mix(in oklab, var(--primary) 22%, transparent); }
+.quiz-theme .shadow-soft { box-shadow: 0 18px 55px color-mix(in oklab, var(--foreground) 8%, transparent); }
+.quiz-theme .shadow-sticky { box-shadow: 0 -8px 30px color-mix(in oklab, var(--foreground) 10%, transparent); }
+.quiz-theme .organic-shape { border-radius: 42% 58% 65% 35% / 40% 38% 62% 60%; transform: rotate(5deg); }
+.quiz-theme .animate-question-in { animation: question-in 420ms cubic-bezier(.2,.8,.2,1) both; }
+@keyframes question-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
