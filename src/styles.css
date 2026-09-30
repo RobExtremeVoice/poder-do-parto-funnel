@@ -171,6 +171,16 @@
     background-color: var(--color-accent);
     color: var(--color-accent-foreground);
   }
+
+  /*
+   * Precisa ficar dentro de @layer base: uma regra "img" sem camada teria
+   * prioridade sobre QUALQUER utilitário do Tailwind (h-10, h-full, etc.),
+   * não importa a especificidade — foi o que estourava a logo do header.
+   */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 @utility page-wrap {
@@ -197,11 +207,6 @@
     padding-bottom: calc(5rem + env(safe-area-inset-bottom));
   }
 
-}
-
-img {
-  max-width: 100%;
-  height: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
