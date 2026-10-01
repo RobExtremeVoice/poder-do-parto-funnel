@@ -211,7 +211,7 @@ function Intro({ variant, onStart }: { variant: "A" | "B"; onStart: () => void }
       <section className="relative mx-auto grid min-h-[calc(100vh-88px)] max-w-6xl items-center gap-10 px-5 pb-14 pt-6 lg:grid-cols-[1.06fr_.94fr] lg:py-16">
         <div className="relative z-10 mx-auto max-w-2xl text-center lg:mx-0 lg:text-left">
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/60 bg-accent/35 px-4 py-2 text-xs font-bold uppercase text-primary"><Sparkles className="size-4" /> Quiz gratuito • 2 minutos</span>
-          <h1 className="mt-6 font-display text-4xl leading-[1.08] font-semibold text-foreground sm:text-5xl lg:text-6xl">{headline}</h1>
+          <h1 className="mt-6 font-display text-4xl leading-[1.08] font-semibold text-plum sm:text-5xl lg:text-6xl">{headline}</h1>
           <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg lg:mx-0">Responda 8 perguntas rápidas e descubra o próximo passo ideal para se preparar com mais informação, clareza e confiança.</p>
           <div className="mt-7 flex flex-wrap justify-center gap-x-5 gap-y-3 text-sm font-medium text-foreground lg:justify-start">
             {['Resultado personalizado', 'Sem julgamento', 'Conteúdo educativo'].map((item) => <span key={item} className="inline-flex items-center gap-2"><CheckCircle2 className="size-4 text-primary" />{item}</span>)}
@@ -219,10 +219,10 @@ function Intro({ variant, onStart }: { variant: "A" | "B"; onStart: () => void }
           <Button onClick={onStart} size="lg" className="mt-8 h-14 w-full rounded-xl bg-brand-gradient px-7 text-base font-bold shadow-brand hover:opacity-95 sm:w-auto">COMEÇAR O QUIZ <ArrowRight /></Button>
           <p className="mt-4 text-sm text-muted-foreground">Mais de 1.700 mulheres já passaram pela preparação da Mari.</p>
         </div>
-        <div className="relative mx-auto hidden h-[510px] w-full max-w-md lg:block" aria-hidden="true">
-          <div className="organic-shape absolute inset-4 bg-accent/50" />
-          <div className="absolute inset-10 grid place-items-center rounded-full border border-primary/10 bg-lavender/70"><HeartHandshake className="size-36 stroke-[1] text-primary/80" /></div>
-          <div className="absolute bottom-10 left-0 max-w-[220px] rounded-lg border border-border bg-background/95 p-4 shadow-soft"><p className="font-display text-lg text-foreground">Informação acolhe.</p><p className="mt-1 text-sm text-muted-foreground">Clareza ajuda você a fazer perguntas melhores.</p></div>
+        <div className="relative mx-auto hidden h-[510px] w-full max-w-md lg:block">
+          <div className="organic-shape absolute inset-4 bg-accent/50" aria-hidden="true" />
+          <div className="absolute inset-10 overflow-hidden rounded-full border border-primary/10 bg-lavender/70"><img src={MARI} alt="Mariana Betioli, especialista em preparação para o parto" className="size-full object-cover" /></div>
+          <div className="absolute bottom-10 left-0 max-w-[220px] rounded-lg border border-border bg-background/95 p-4 shadow-soft"><p className="font-display text-lg text-plum">Informação acolhe.</p><p className="mt-1 text-sm text-muted-foreground">Clareza ajuda você a fazer perguntas melhores.</p></div>
         </div>
       </section>
     </main>
