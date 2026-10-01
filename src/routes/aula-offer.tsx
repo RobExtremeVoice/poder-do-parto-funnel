@@ -197,6 +197,7 @@ function PlanCard({
   href,
   featured = false,
   onSelect,
+  thumbnail,
 }: {
   id?: string;
   name: string;
@@ -207,6 +208,7 @@ function PlanCard({
   href: string;
   featured?: boolean;
   onSelect?: () => void;
+  thumbnail?: { src: string; alt: string };
 }) {
   return (
     <article
@@ -225,14 +227,24 @@ function PlanCard({
       </p>
       <h3 className="mt-3 font-display text-2xl font-semibold leading-tight text-foreground sm:text-3xl">{name}</h3>
       <p className="mt-3 text-muted-foreground sm:min-h-16">{subtitle}</p>
-      <div className="mt-6 sm:mt-7">
-        <div className="flex flex-wrap items-baseline gap-2 text-primary">
-          <span className="text-lg font-bold sm:text-xl">12x</span>
-          <span className="font-display text-3xl font-bold sm:text-5xl">R$ {amount}<span className="align-top text-base sm:text-lg">*</span></span>
+      <div className="mt-6 flex items-center justify-between gap-4 sm:mt-7">
+        <div>
+          <div className="flex flex-wrap items-baseline gap-2 text-primary">
+            <span className="text-lg font-bold sm:text-xl">12x</span>
+            <span className="font-display text-3xl font-bold sm:text-5xl">R$ {amount}<span className="align-top text-base sm:text-lg">*</span></span>
+          </div>
+          <p className="mt-2 text-sm text-muted-foreground">
+            ou <strong className="text-foreground">R$ {cash}</strong> à vista
+          </p>
         </div>
-        <p className="mt-2 text-sm text-muted-foreground">
-          ou <strong className="text-foreground">R$ {cash}</strong> à vista
-        </p>
+        {thumbnail && (
+          <img
+            src={thumbnail.src}
+            alt={thumbnail.alt}
+            className="size-[160px] shrink-0 rounded-lg border border-border object-cover sm:size-[200px]"
+            loading="lazy"
+          />
+        )}
       </div>
       <ul className="my-6 flex flex-1 flex-col gap-3 sm:my-7">
         {features.map((feature) => (
@@ -592,6 +604,7 @@ function LandingPage() {
                 features={completeFeatures}
                 href="https://pay.hotmart.com/X88395451D?off=7skbnr37&checkoutMode=10"
                 featured
+                thumbnail={{ src: mariWithYouImage.url, alt: "Mari com Você — acompanhamento individual pelo WhatsApp até o parto" }}
               />
             </div>
           </div>

@@ -18,6 +18,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Reveal } from "@/components/guia-sales/Reveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import logoPoderDoParto from "@/assets/guia/logo-poder-do-parto.png.asset.json";
+import mariComVoce from "@/assets/mari-com-voce.png.asset.json";
 import marianaFoto from "@/assets/guia/mariana-betioli.png.asset.json";
 import capaLivro from "@/assets/guia/capa-livro.jpeg.asset.json";
 
@@ -283,14 +284,22 @@ function ObrigadoPage() {
                 <p className="mt-3 text-sm leading-relaxed text-primary-foreground/75">
                   Todo o curso e a tranquilidade de falar diretamente com a Mari durante a gestação.
                 </p>
-                <div className="mt-6">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-lg font-bold">12x</span>
-                    <span className="font-display text-4xl font-semibold sm:text-5xl">R$ 40,75<span className="align-top text-base sm:text-lg">*</span></span>
+                <div className="mt-6 flex items-center justify-between gap-4">
+                  <div>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-lg font-bold">12x</span>
+                      <span className="font-display text-4xl font-semibold sm:text-5xl">R$ 40,75<span className="align-top text-base sm:text-lg">*</span></span>
+                    </div>
+                    <p className="mt-1 text-sm text-primary-foreground/75">
+                      ou <strong className="text-primary-foreground">R$ 394,00</strong> à vista
+                    </p>
                   </div>
-                  <p className="mt-1 text-sm text-primary-foreground/75">
-                    ou <strong className="text-primary-foreground">R$ 394,00</strong> à vista
-                  </p>
+                  <img
+                    src={mariComVoce.url}
+                    alt="Mari com Você — acompanhamento individual pelo WhatsApp até o parto"
+                    className="size-24 shrink-0 rounded-lg border border-primary-foreground/20 object-cover"
+                    loading="lazy"
+                  />
                 </div>
                 <div className="my-6 h-px bg-primary-foreground/20" />
                 <ul className="flex-1 space-y-3">
