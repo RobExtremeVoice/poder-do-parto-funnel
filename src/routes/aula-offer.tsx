@@ -38,6 +38,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { SiteFooter } from "@/components/SiteFooter";
 import {
   Dialog,
   DialogContent,
@@ -693,10 +694,7 @@ function LandingPage() {
         </section>
       </main>
 
-      <footer className="border-t border-border px-4 py-8 text-center text-xs text-muted-foreground sm:text-sm">
-         <img src={logo.url} alt="O Poder do Parto" className="mx-auto mb-4 w-36 opacity-80 sm:w-44" width={512} height={160} loading="lazy" decoding="async" />
-        <p className="mx-auto max-w-2xl leading-relaxed">© 2026 O Poder do Parto • Conteúdo educativo • Não substitui acompanhamento médico</p>
-      </footer>
+      <SiteFooter />
 
       <div
         className={`fixed inset-x-3 bottom-3 z-50 transition-all duration-300 sm:hidden ${

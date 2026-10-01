@@ -16,8 +16,8 @@ import {
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Reveal } from "@/components/guia-sales/Reveal";
+import { SiteFooter } from "@/components/SiteFooter";
 import logoPoderDoParto from "@/assets/guia/logo-poder-do-parto.png.asset.json";
-import logoBranca from "@/assets/guia/logo-branca.png.asset.json";
 import marianaFoto from "@/assets/guia/mariana-betioli.png.asset.json";
 import capaLivro from "@/assets/guia/capa-livro.jpeg.asset.json";
 
@@ -528,45 +528,7 @@ function ObrigadoPage() {
       </section>
 
       {/* ===== FOOTER ===== */}
-      <footer className="bg-foreground px-4 pb-32 pt-12 text-background/70 md:px-8 lg:pb-12">
-        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
-          <div>
-            <img
-              src={logoBranca.url}
-              alt="O Poder do Parto"
-              width={1600}
-              height={531}
-              className="h-9 w-auto object-contain"
-            />
-            <p className="mt-4 max-w-sm text-sm leading-relaxed">
-              Educação para uma experiência de nascimento mais consciente, respeitosa e informada.
-            </p>
-          </div>
-          <div>
-            <p className="font-bold text-background">Atendimento</p>
-            <p className="mt-3 text-sm">Suporte: atendimento@poderdoparto.com.br</p>
-            <p className="mt-2 text-sm">Dados cadastrais e CNPJ: consulte no checkout</p>
-          </div>
-          <div>
-            <p className="font-bold text-background">Informações legais</p>
-            <div className="mt-3 flex gap-4 text-sm">
-              <a href="https://www.poderdoparto.com.br/termos" className="underline">
-                Termos de Uso
-              </a>
-              <a href="https://www.poderdoparto.com.br/privacidade" className="underline">
-                Política de Privacidade
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="mx-auto mt-10 max-w-5xl border-t border-background/15 pt-7 text-xs leading-relaxed">
-          <p>
-            O conteúdo possui finalidade educacional e não substitui consultas, diagnóstico,
-            orientação ou acompanhamento de profissionais de saúde. © 2026 O Poder do Parto. Todos
-            os direitos reservados.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
 
       {/* ===== STICKY CTA MOBILE ===== */}
       <div

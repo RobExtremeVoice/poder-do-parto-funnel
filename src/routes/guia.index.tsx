@@ -6,6 +6,7 @@ import { AuthorityTestimonials } from "@/components/guia-sales/sections/Authorit
 import { Offer } from "@/components/guia-sales/sections/Offer";
 import { FaqFinal } from "@/components/guia-sales/sections/FaqFinal";
 import { StickyCta } from "@/components/guia-sales/StickyCta";
+import { SiteFooter } from "@/components/SiteFooter";
 import { FAQS, PRODUCT_NAME } from "@/components/guia-sales/data";
 
 const TITLE = "18 Perguntas para Fazer ao Obstetra | O Poder do Parto";
@@ -76,6 +77,7 @@ function SalesPage() {
         <Offer />
         <FaqFinal />
       </main>
+      <SiteFooter />
       <StickyCta />
     </>
   );

@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { SiteFooter } from "@/components/SiteFooter";
 import { offerConfig } from "@/config/offers";
 import { goToCheckout, trackEvent } from "@/lib/tracking";
 import mariPortrait from "@/assets/oferta/mariana-betioli.png.asset.json";
@@ -316,7 +317,7 @@ function Index() {
         <section data-reveal className="bg-plum px-4 py-16 text-center text-primary-foreground md:px-8 md:py-24"><div className="mx-auto max-w-4xl"><Baby className="mx-auto size-12 text-warm" /><h2 className="mt-6 text-3xl font-extrabold leading-tight md:text-5xl">Você não precisa chegar ao parto sem saber o que esperar.</h2><p className="mx-auto mt-5 max-w-2xl text-primary-foreground/75 md:text-lg">Prepare-se com informação confiável, ferramentas práticas e acolhimento para viver esse momento com mais segurança.</p><Button onClick={() => scrollToOffers("final_cta")} className="mt-8 min-h-14 w-full rounded-2xl bg-accent px-7 font-extrabold hover:bg-accent/90 sm:w-auto">QUERO COMEÇAR AGORA <ArrowRight /></Button></div></section>
       </main>
 
-      <footer className="bg-foreground px-4 pb-32 pt-12 lg:pb-12 lg:pt-12 text-background/70 md:px-8"><div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3"><div><Brand light /><p className="mt-4 max-w-sm text-sm leading-relaxed">Educação para uma experiência de nascimento mais consciente, respeitosa e informada.</p></div><div><p className="font-bold text-background">Atendimento</p><p className="mt-3 text-sm">Suporte: atendimento@poderdoparto.com.br</p><p className="mt-2 text-sm">Dados cadastrais e CNPJ: consulte no checkout</p></div><div><p className="font-bold text-background">Informações legais</p><div className="mt-3 flex gap-4 text-sm"><a href="https://www.poderdoparto.com.br/termos" className="underline">Termos de Uso</a><a href="https://www.poderdoparto.com.br/privacidade" className="underline">Política de Privacidade</a></div></div></div><div className="mx-auto mt-10 max-w-7xl border-t border-background/15 pt-7 text-xs leading-relaxed"><p>O conteúdo possui finalidade educacional e não substitui consultas, diagnóstico, orientação ou acompanhamento de profissionais de saúde. © 2026 O Poder do Parto. Todos os direitos reservados.</p></div></footer>
+      <SiteFooter />
 
       <div
         className={`safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 px-4 pt-3 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] backdrop-blur transition-transform duration-300 lg:hidden ${showStickyCta ? "translate-y-0" : "translate-y-full"}`}
