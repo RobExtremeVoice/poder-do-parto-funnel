@@ -66,6 +66,10 @@
   --color-success-soft: var(--success-soft);
   --color-success-bright: var(--success-bright);
   --color-success-foreground: var(--success-foreground);
+  --color-plum: var(--plum);
+  --color-plum-deep: var(--plum-deep);
+  --color-warm: var(--warm);
+  --color-warm-soft: var(--warm-soft);
 }
 
 :root {
@@ -94,6 +98,17 @@
   --success-soft: oklch(0.96 0.035 158);
   --success-bright: oklch(0.83 0.13 158);
   --success-foreground: oklch(0.99 0 0);
+  /*
+   * plum/warm: usados em /oferta e /aula (bg-plum, text-plum, bg-warm, etc.)
+   * mas nunca tinham sido definidos aqui — sem token, o Tailwind não gera
+   * a classe, então bg-plum não pintava nada e o texto (branco) ficava
+   * sobre fundo branco. plum é a cor de marca escurecida, para seções
+   * cheias e títulos; warm é o acento dourado usado sobre o plum.
+   */
+  --plum: oklch(0.26 0.09 316);
+  --plum-deep: oklch(0.18 0.07 316);
+  --warm: oklch(0.78 0.13 75);
+  --warm-soft: oklch(0.97 0.03 75);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
