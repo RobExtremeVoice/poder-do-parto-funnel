@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { SiteFooter } from "@/components/SiteFooter";
 
 import logo from "@/assets/aula/imgi_30_o-poder-do-parto-2048x680-1.png.asset.json";
+import mariComVoce from "@/assets/mari-com-voce.png.asset.json";
 import guarantee from "@/assets/aula/garantia-parto.png.asset.json";
 import women from "@/assets/aula/depoimentos_mulheres-removebg-preview.png.asset.json";
 import module1 from "@/assets/aula/imgi_6_modulo-1-parto.jpg.asset.json";
@@ -205,7 +206,7 @@ function Offer() {
         <p className="mx-auto mt-5 max-w-3xl text-center text-muted-foreground">Os dois planos oferecem o curso completo. No plano Completo, você também conta com um canal direto com a Mari durante a gestação.</p>
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
           <PlanCard name="O Poder do Parto Essencial" subtitle="Para quem quer compreender o parto, reconhecer escolhas e chegar mais preparada." amount="30,72" cash="297,00" features={essentialFeatures} onSelect={openUpsell} />
-          <PlanCard name="O Poder do Parto Completo" subtitle="Para quem quer todo o curso e a tranquilidade de poder falar diretamente com a Mari durante a gestação." amount="40,75" cash="394,00" features={completeFeatures} href={COMPLETE_CHECKOUT} featured />
+          <PlanCard name="O Poder do Parto Completo" subtitle="Para quem quer todo o curso e a tranquilidade de poder falar diretamente com a Mari durante a gestação." amount="40,75" cash="394,00" features={completeFeatures} href={COMPLETE_CHECKOUT} featured thumbnail={{ src: mariComVoce.url, alt: "Mari com Você — acompanhamento individual pelo WhatsApp até o parto" }} />
         </div>
       </div>
     </section>
@@ -245,11 +246,12 @@ function Offer() {
   </div>;
 }
 
-function PlanCard({ name, subtitle, amount, cash, features, href, featured=false, onSelect }: { name:string; subtitle:string; amount:string; cash:string; features:string[]; href?:string; featured?:boolean; onSelect?:()=>void }) {
+function PlanCard({ name, subtitle, amount, cash, features, href, featured=false, onSelect, thumbnail }: { name:string; subtitle:string; amount:string; cash:string; features:string[]; href?:string; featured?:boolean; onSelect?:()=>void; thumbnail?:{ src:string; alt:string } }) {
   return <article className={`relative flex flex-col rounded-md border bg-card p-6 shadow-sm sm:p-8 ${featured ? "border-2 border-primary shadow-xl lg:-translate-y-2" : "border-border"}`}>
     {featured && <span className="absolute right-6 top-0 -translate-y-1/2 rounded-md bg-primary px-4 py-2 text-xs font-bold uppercase text-primary-foreground">Mais escolhido</span>}
     <p className="text-xs font-bold uppercase text-primary">Plano {featured ? "completo" : "essencial"}</p><h3 className="mt-3 font-display text-2xl font-bold sm:text-3xl">{name}</h3><p className="mt-3 min-h-16 text-muted-foreground">{subtitle}</p>
     <div className="mt-7 text-primary"><span className="text-xl font-bold">12x </span><span className="font-display text-4xl font-bold sm:text-5xl">R$ {amount}<span className="align-top text-base sm:text-lg">*</span></span><p className="mt-2 text-sm text-muted-foreground">ou <strong className="text-foreground">R$ {cash}</strong> à vista</p></div>
+    {thumbnail && <div className="mt-6 overflow-hidden rounded-md border border-border"><img src={thumbnail.src} alt={thumbnail.alt} className="w-full object-cover" loading="lazy" /></div>}
     <ul className="my-7 flex flex-1 flex-col gap-3">{features.map(feature => <li key={feature} className="flex gap-3"><Check aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-success" strokeWidth={3} /><span>{feature}</span></li>)}</ul>
     {onSelect ? <Button size="lg" variant="outline" onClick={onSelect} className="h-auto w-full py-4 text-base font-bold">Escolher o Essencial</Button> : <Button asChild size="lg" className="h-auto w-full py-4 text-base font-bold"><a href={href}>Quero a preparação completa</a></Button>}
     <small className="mt-3 text-center text-muted-foreground">Garantia incondicional de 7 dias</small>
