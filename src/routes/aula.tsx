@@ -116,9 +116,7 @@ function Index() {
     if (force || wait === 0) setRevealed(true);
     const timer = window.setTimeout(() => setRevealed(true), wait);
     trackingKeys.forEach((key) => { const value = query.get(key); if (value) sessionStorage.setItem(key, value); });
-    const fb = document.createElement("script");
-    fb.text = "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','340206031120534');fbq('track','PageView');";
-    document.head.appendChild(fb);
+    // Meta Pixel agora é injetado globalmente pelo __root.tsx.
     const smartplayer = document.createElement("script");
     smartplayer.src = "https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js";
     smartplayer.async = true;
@@ -127,7 +125,7 @@ function Index() {
     player.src = "https://scripts.converteai.net/639563c1-cf70-4484-8d65-6fd485e96ab9/players/6a28849f56303c2b198f3c7b/v4/player.js";
     player.async = true;
     document.body.appendChild(player);
-    return () => { window.clearTimeout(timer); fb.remove(); smartplayer.remove(); player.remove(); };
+    return () => { window.clearTimeout(timer); smartplayer.remove(); player.remove(); };
   }, []);
 
   useEffect(() => {
