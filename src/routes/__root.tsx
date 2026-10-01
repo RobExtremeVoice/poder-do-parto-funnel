@@ -6,11 +6,13 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  redirect,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { resolveHostRedirect } from "../lib/host-redirect";
 
 function NotFoundComponent() {
   return (
@@ -73,6 +75,11 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  beforeLoad: async () => {
+    if (typeof window !== "undefined") return; // só precisa rodar na primeira renderização (servidor)
+    const target = await resolveHostRedirect();
+    if (target) throw redirect({ href: target });
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
