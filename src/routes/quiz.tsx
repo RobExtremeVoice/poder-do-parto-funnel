@@ -211,7 +211,7 @@ function Intro({ variant, onStart }: { variant: "A" | "B"; onStart: () => void }
       <BrandHeader />
       <section className="relative mx-auto grid min-h-[calc(100vh-88px)] max-w-6xl items-center gap-10 px-5 pb-14 pt-6 lg:grid-cols-[1.06fr_.94fr] lg:py-16">
         <div className="relative z-10 mx-auto max-w-2xl text-center lg:mx-0 lg:text-left">
-          <span className="inline-flex items-center gap-2 rounded-full border border-accent/60 bg-accent/35 px-4 py-2 text-xs font-bold uppercase text-primary"><Sparkles className="size-4" /> Quiz gratuito • 2 minutos</span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent/60 bg-accent/35 px-4 py-2 text-xs font-bold uppercase text-primary"><Sparkles className="size-4" /> Quiz gratuito • 1 minuto</span>
           <h1 className="mt-6 font-display text-4xl leading-[1.08] font-semibold text-plum sm:text-5xl lg:text-6xl">{headline}</h1>
           <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg lg:mx-0">Responda 8 perguntas rápidas e descubra o próximo passo ideal para se preparar com mais informação, clareza e confiança.</p>
           <div className="mt-7 flex flex-wrap justify-center gap-x-5 gap-y-3 text-sm font-medium text-foreground lg:justify-start">
