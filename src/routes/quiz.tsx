@@ -186,8 +186,9 @@ function QuizFlow() {
   function showOffer() {
     setScreen("result");
     track("offer_click", { result, recommended_plan: resultCopy.plan, lead_consent: consent });
-    // Só envia ao GoHighLevel com consentimento marcado; falha não bloqueia o funil.
-    if (consent && (email.trim() || whatsapp.trim())) {
+    // Envia ao GoHighLevel sempre que houver e-mail ou WhatsApp preenchido,
+    // independente do checkbox de autorização; falha não bloqueia o funil.
+    if (email.trim() || whatsapp.trim()) {
       createGhlLead({ data: { name, email, phone: whatsapp } }).catch(() => {});
     }
   }
