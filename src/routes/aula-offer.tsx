@@ -228,7 +228,7 @@ function PlanCard({
       <div className="mt-6 sm:mt-7">
         <div className="flex flex-wrap items-baseline gap-2 text-primary">
           <span className="text-lg font-bold sm:text-xl">12x</span>
-          <span className="font-display text-3xl font-bold sm:text-5xl">R$ {amount}*</span>
+          <span className="font-display text-3xl font-bold sm:text-5xl">R$ {amount}<span className="align-top text-base sm:text-lg">*</span></span>
         </div>
         <p className="mt-2 text-sm text-muted-foreground">
           ou <strong className="text-foreground">R$ {cash}</strong> à vista

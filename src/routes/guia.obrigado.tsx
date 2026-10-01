@@ -244,7 +244,7 @@ function ObrigadoPage() {
                 <div className="mt-6">
                   <div className="flex items-baseline gap-2">
                     <span className="text-lg font-bold">12x</span>
-                    <span className="font-display text-4xl font-semibold sm:text-5xl">R$ 30,72*</span>
+                    <span className="font-display text-4xl font-semibold sm:text-5xl">R$ 30,72<span className="align-top text-base sm:text-lg">*</span></span>
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">
                     ou <strong className="text-foreground">R$ 297,00</strong> à vista
@@ -286,7 +286,7 @@ function ObrigadoPage() {
                 <div className="mt-6">
                   <div className="flex items-baseline gap-2">
                     <span className="text-lg font-bold">12x</span>
-                    <span className="font-display text-4xl font-semibold sm:text-5xl">R$ 40,75*</span>
+                    <span className="font-display text-4xl font-semibold sm:text-5xl">R$ 40,75<span className="align-top text-base sm:text-lg">*</span></span>
                   </div>
                   <p className="mt-1 text-sm text-primary-foreground/75">
                     ou <strong className="text-primary-foreground">R$ 394,00</strong> à vista
