@@ -458,18 +458,6 @@ function LandingPage() {
           </div>
         </section>
 
-        <section className="py-16 text-center sm:py-20">
-          <div className="page-wrap max-w-4xl">
-            <Eyebrow>A aula foi o começo</Eyebrow>
-            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
-              Agora você precisa de um caminho claro até o dia do parto.
-            </h2>
-            <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Sem outra aula longa e sem repetir o que você acabou de assistir. Aqui você compara as opções, entende o que recebe e escolhe como quer continuar sua preparação.
-            </p>
-          </div>
-        </section>
-
         <section className="px-4 pb-14 pt-6 md:px-8 md:pb-20">
           <div className="mx-auto max-w-5xl text-center">
             <div className="mx-auto mb-2 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-[11px] font-bold text-primary">
@@ -491,6 +479,18 @@ function LandingPage() {
             </a>
             <p className="mt-4 text-sm font-semibold text-muted-foreground">
               Acesso vitalício • Garantia de 7 dias • No seu próprio ritmo
+            </p>
+          </div>
+        </section>
+
+        <section className="py-16 text-center sm:py-20">
+          <div className="page-wrap max-w-4xl">
+            <Eyebrow>A aula foi o começo</Eyebrow>
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
+              Agora você precisa de um caminho claro até o dia do parto.
+            </h2>
+            <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              Sem outra aula longa e sem repetir o que você acabou de assistir. Aqui você compara as opções, entende o que recebe e escolhe como quer continuar sua preparação.
             </p>
           </div>
         </section>
