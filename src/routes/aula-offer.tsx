@@ -5,8 +5,11 @@ import {
   Check,
   CheckCircle2,
   Heart,
+  Play,
   ShieldCheck,
+  Sparkles,
 } from "lucide-react";
+import videoPoster from "@/assets/oferta/video-poster.webp.asset.json";
 
 import heroImage from "@/assets/gestante-hero.jpg";
 import logo from "@/assets/logo.png.asset.json";
@@ -178,6 +181,81 @@ const faqs = [
       "Você tem sete dias após a compra para conhecer o conteúdo e solicitar o reembolso, conforme as condições apresentadas no checkout.",
   },
 ];
+
+const VSL_PLAYER_ID = "vid-6a288cff68519b4d1b50bf92";
+const VSL_SCRIPT_URL = "https://scripts.converteai.net/639563c1-cf70-4484-8d65-6fd485e96ab9/players/6a288cff68519b4d1b50bf92/v4/player.js";
+
+// Vídeo de vendas: só carrega o player ao clicar, para não pesar a página.
+function VslPlayer() {
+  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
+
+  const load = () => {
+    if (status === "loading" || status === "ready") return;
+    setStatus("loading");
+    const finish = () => {
+      window.customElements.whenDefined("vturb-smartplayer").then(() => setStatus("ready"));
+    };
+    if (window.customElements.get("vturb-smartplayer")) {
+      setStatus("ready");
+      return;
+    }
+    const existing = document.querySelector<HTMLScriptElement>(`script[src="${VSL_SCRIPT_URL}"]`);
+    if (existing) {
+      existing.addEventListener("load", finish, { once: true });
+      existing.addEventListener("error", () => setStatus("error"), { once: true });
+    } else {
+      const script = document.createElement("script");
+      script.src = VSL_SCRIPT_URL;
+      script.async = true;
+      script.onload = finish;
+      script.onerror = () => setStatus("error");
+      document.head.appendChild(script);
+    }
+    window.setTimeout(() => {
+      if (!window.customElements.get("vturb-smartplayer")) setStatus("error");
+    }, 15000);
+  };
+
+  return (
+    <div className="relative mx-auto mt-3 aspect-video w-full max-w-[38rem] overflow-hidden rounded-2xl border-4 border-background bg-plum shadow-2xl">
+      {status !== "idle" && <vturb-smartplayer id={VSL_PLAYER_ID} className="block h-full w-full" />}
+      {status !== "ready" && (
+        <div className="absolute inset-0 bg-plum text-primary-foreground">
+          <img
+            src={videoPoster.url}
+            alt="Mari Betioli apresentando O Poder do Parto"
+            width={640}
+            height={360}
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-foreground/25" />
+          <div className="absolute inset-0 grid place-items-center px-4">
+            {status === "loading" ? (
+              <div className="text-center" role="status" aria-live="polite">
+                <span className="mx-auto block size-10 animate-spin rounded-full border-4 border-primary-foreground/40 border-t-primary-foreground" />
+                <p className="mt-3 text-sm font-bold">Preparando o vídeo...</p>
+              </div>
+            ) : (
+              <button type="button" onClick={load} className="flex flex-col items-center gap-3">
+                <span className="grid size-16 place-items-center rounded-full bg-accent shadow-lg">
+                  <Play className="ml-1 size-7 fill-current" />
+                </span>
+                <span className="text-sm font-extrabold">
+                  {status === "error" ? "Tentar novamente" : "Assistir ao vídeo"}
+                </span>
+              </button>
+            )}
+          </div>
+          {status === "error" && (
+            <p className="absolute inset-x-3 bottom-2 text-center text-[11px] font-semibold drop-shadow">
+              A conexão está lenta. A capa permanece disponível enquanto você tenta novamente.
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
   return (
@@ -388,6 +466,31 @@ function LandingPage() {
             </h2>
             <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Sem outra aula longa e sem repetir o que você acabou de assistir. Aqui você compara as opções, entende o que recebe e escolhe como quer continuar sua preparação.
+            </p>
+          </div>
+        </section>
+
+        <section className="px-4 pb-14 pt-6 md:px-8 md:pb-20">
+          <div className="mx-auto max-w-5xl text-center">
+            <div className="mx-auto mb-2 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-[11px] font-bold text-primary">
+              <Sparkles className="size-3.5" />
+              Informação transforma medo em escolha
+            </div>
+            <h2 className="mx-auto max-w-4xl text-[1.6rem] font-extrabold leading-[1.15] text-plum sm:text-3xl lg:text-4xl">
+              Prepare-se para viver o nascimento do seu bebê com mais consciência, confiança e protagonismo
+            </h2>
+            <p className="mx-auto mt-2 max-w-3xl text-[0.8rem] leading-relaxed text-muted-foreground sm:text-sm">
+              Da gestação ao pós-parto: entenda o trabalho de parto, conheça seus direitos e prepare um acompanhante verdadeiramente ativo.
+            </p>
+            <VslPlayer />
+            <a
+              href="#planos"
+              className="mt-6 inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-accent px-6 text-sm font-extrabold shadow-xl hover:bg-accent/90 sm:w-auto sm:text-base"
+            >
+              QUERO ME PREPARAR PARA O MEU PARTO <ArrowDown className="size-4" />
+            </a>
+            <p className="mt-4 text-sm font-semibold text-muted-foreground">
+              Acesso vitalício • Garantia de 7 dias • No seu próprio ritmo
             </p>
           </div>
         </section>
