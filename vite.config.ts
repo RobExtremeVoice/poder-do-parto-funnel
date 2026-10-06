@@ -11,5 +11,9 @@ export default defineConfig({
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+    // /oferta é igual para toda visitante (sem personalização) e é a página
+    // com mais tráfego do funil — pré-renderiza em build time para reduzir
+    // o TTFB (deixa de rodar SSR a cada visita, serve HTML estático).
+    pages: [{ path: "/oferta", prerender: { enabled: true } }],
   },
 });

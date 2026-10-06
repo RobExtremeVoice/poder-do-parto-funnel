@@ -87,6 +87,14 @@ export const Route = createFileRoute("/quiz")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    // Playfair Display só é usado no tema do quiz (.quiz-theme); nas demais
+    // páginas o link global carrega só DM Sans + Fraunces.
+    links: [
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap",
+      },
+    ],
   }),
   component: QuizPage,
 });

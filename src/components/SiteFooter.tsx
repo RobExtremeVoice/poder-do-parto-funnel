@@ -1,6 +1,6 @@
 // Footer padrão do site, usado em todas as páginas de venda/funil.
 // Fonte original: /oferta — ver histórico de commits se precisar comparar.
-const FOOTER_LOGO = "/media/aula-offer/d9f30f85-8b33-43a6-8f83-90883a241efd-logo-o-poder-do-parto-white.png";
+const FOOTER_LOGO = "/media/aula-offer/d9f30f85-8b33-43a6-8f83-90883a241efd-logo-o-poder-do-parto-white.webp";
 
 export function SiteFooter() {
   return (
@@ -12,6 +12,7 @@ export function SiteFooter() {
             alt="O Poder do Parto"
             width={1600}
             height={531}
+            loading="lazy"
             className="h-10 w-auto object-contain"
           />
           <p className="mt-4 max-w-sm text-sm leading-relaxed">
