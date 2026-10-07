@@ -2,10 +2,10 @@
   "version": 1,
   "asset_id": "f6c88494-8406-422f-b41f-595eb7190ea2",
   "project_id": "e972a872-f657-4344-b8e6-cab1a5618fee",
-  "url": "/media/oferta/f6c88494-8406-422f-b41f-595eb7190ea2-modulo-4.jpg",
-  "r2_key": "a/v1/e972a872-f657-4344-b8e6-cab1a5618fee/f6c88494-8406-422f-b41f-595eb7190ea2/modulo-4.jpg",
-  "original_filename": "modulo-4.jpg",
-  "size": 66964,
-  "content_type": "image/jpeg",
+  "url": "/media/oferta/f6c88494-8406-422f-b41f-595eb7190ea2-modulo-4.webp",
+  "r2_key": "media/oferta/f6c88494-8406-422f-b41f-595eb7190ea2-modulo-4.webp",
+  "original_filename": "modulo-4.webp",
+  "size": 15812,
+  "content_type": "image/webp",
   "created_at": "2026-09-22T02:45:22Z"
 }
