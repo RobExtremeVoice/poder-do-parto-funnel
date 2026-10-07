@@ -237,7 +237,7 @@ function VslPlayer() {
               </div>
             ) : (
               <button type="button" onClick={load} className="flex flex-col items-center gap-3">
-                <span className="grid size-16 place-items-center rounded-full bg-accent shadow-lg">
+                <span className="grid size-16 place-items-center rounded-full bg-accent text-accent-foreground shadow-lg">
                   <Play className="ml-1 size-7 fill-current" />
                 </span>
                 <span className="text-sm font-extrabold">
