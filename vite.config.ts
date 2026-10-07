@@ -12,4 +12,6 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // routeRules (ISR) ficam em nitro.config.ts — o tipo `nitro` aqui é
+  // propositalmente restrito e não inclui routeRules.
 });
