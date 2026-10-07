@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import videoPoster from "@/assets/oferta/video-poster.webp.asset.json";
 
-import heroImage from "@/assets/gestante-hero.jpg";
+import heroImage from "@/assets/gestante-hero.webp";
 import logo from "@/assets/logo.png.asset.json";
 import mariWithYouImage from "@/assets/mari-com-voce.png.asset.json";
 import mariPhoto from "@/assets/mari-betioli.png.asset.json";
@@ -123,10 +123,10 @@ const bonuses = [
 ] as const;
 
 const testimonials = [
-  [testimonial1, "Aluna conta que fez os exercícios recomendados e sua bebê nasceu após um parto normal"],
-  [testimonial2, "Aluna agradece pelas orientações que a ajudaram a manter a calma e chegar ao hospital no momento certo"],
-  [testimonial3, "Aluna recomenda o curso da Mari e destaca a importância de informação, movimento e hidratação"],
-  [testimonial4, "Aluna com 38 semanas elogia o curso enquanto aguarda a chegada do bebê"],
+  [testimonial1, "Aluna conta que fez os exercícios recomendados e sua bebê nasceu após um parto normal", 739, 1256],
+  [testimonial2, "Aluna agradece pelas orientações que a ajudaram a manter a calma e chegar ao hospital no momento certo", 900, 615],
+  [testimonial3, "Aluna recomenda o curso da Mari e destaca a importância de informação, movimento e hidratação", 900, 523],
+  [testimonial4, "Aluna com 38 semanas elogia o curso enquanto aguarda a chegada do bebê", 900, 293],
 ] as const;
 
 const checkoutWindowName = "hotmart-checkout";
@@ -398,7 +398,7 @@ function LandingPage() {
 
       <header className="page-wrap flex items-center justify-between gap-4 py-4 sm:py-5">
         <a href="#top" aria-label="O Poder do Parto — voltar ao início" className="inline-flex shrink-0 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-          <img src={logo.url} alt="O Poder do Parto" className="w-32 sm:w-52" width={512} height={160} />
+          <img src={logo.url} alt="O Poder do Parto" className="w-32 sm:w-52" width={900} height={299} />
         </a>
         <div className="hidden items-center gap-2 text-sm text-muted-foreground sm:flex">
           <CheckCircle2 className="size-4 shrink-0 text-success-dark" aria-hidden="true" />
@@ -439,8 +439,8 @@ function LandingPage() {
               <img
                 src={heroImage}
                 alt="Gestante serena representando uma preparação consciente para o parto"
-                width={1024}
-                height={1280}
+                width={900}
+                height={1125}
                 fetchPriority="high"
                 decoding="async"
                 className="relative h-full w-full rounded-[46%_46%_18%_18%] object-cover object-top shadow-2xl"
@@ -513,8 +513,8 @@ function LandingPage() {
                      <img
                        src={image}
                        alt={`Capa do ${number}: ${title}`}
-                       width={1024}
-                       height={576}
+                       width={700}
+                       height={394}
                        className="h-full w-full object-contain"
                        loading="lazy"
                        decoding="async"
@@ -553,8 +553,8 @@ function LandingPage() {
                     <img
                       src={image.url}
                       alt={`Capa do ${number}: ${title}`}
-                      width={1600}
-                      height={900}
+                      width={700}
+                      height={394}
                       className="h-full w-full object-contain"
                       loading="lazy"
                       decoding="async"
@@ -650,16 +650,20 @@ function LandingPage() {
             <img
               src={testimonialWomen.url}
               alt="Mulheres que participaram do Poder do Parto"
+              width={700}
+              height={278}
               className="mx-auto mt-8 max-h-56 max-w-full object-contain sm:max-h-72"
               loading="lazy"
               decoding="async"
             />
             <div className="mt-8 grid grid-cols-1 items-start gap-4 sm:grid-cols-2 sm:gap-5 lg:mt-10 lg:grid-cols-4">
-              {testimonials.map(([image, description]) => (
+              {testimonials.map(([image, description, width, height]) => (
                 <img
                   key={image.asset_id}
                   src={image.url}
                   alt={description}
+                  width={width}
+                  height={height}
                   className="w-full rounded-lg border border-border bg-card shadow-sm"
                   loading="lazy"
                   decoding="async"

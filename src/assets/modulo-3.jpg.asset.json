@@ -2,10 +2,10 @@
   "version": 1,
   "asset_id": "62ca8cca-ad32-43d4-ba52-fc90dd2a876b",
   "project_id": "ecb73806-5d02-4275-9776-40c56471f58c",
-  "url": "/media/aula-offer/62ca8cca-ad32-43d4-ba52-fc90dd2a876b-modulo-3.jpg",
-  "r2_key": "a/v1/ecb73806-5d02-4275-9776-40c56471f58c/62ca8cca-ad32-43d4-ba52-fc90dd2a876b/modulo-3.jpg",
-  "original_filename": "modulo-3.jpg",
-  "size": 93635,
-  "content_type": "image/jpeg",
+  "url": "/media/aula-offer/62ca8cca-ad32-43d4-ba52-fc90dd2a876b-modulo-3.webp",
+  "r2_key": "media/aula-offer/62ca8cca-ad32-43d4-ba52-fc90dd2a876b-modulo-3.webp",
+  "original_filename": "modulo-3.webp",
+  "size": 18660,
+  "content_type": "image/webp",
   "created_at": "2026-09-22T00:13:10Z"
 }

@@ -171,8 +171,8 @@ function ObrigadoPage() {
           <img
             src={logoPoderDoParto.url}
             alt="O Poder do Parto"
-            width={1600}
-            height={531}
+            width={900}
+            height={299}
             className="h-9 w-auto object-contain"
           />
         </div>

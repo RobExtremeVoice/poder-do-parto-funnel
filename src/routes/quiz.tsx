@@ -20,10 +20,10 @@ import { Input } from "@/components/ui/input";
 import { SiteFooter } from "@/components/SiteFooter";
 import { createGhlLead } from "@/lib/ghl.functions";
 
-const LOGO = "/media/quiz/logo-o-poder-do-parto.png";
+const LOGO = "/media/quiz/logo-o-poder-do-parto.webp";
 const MARI = "/media/quiz/mari-betioli.webp";
-const TESTIMONIAL_ONE = "/media/quiz/depoimento-aluna-1.jpg";
-const TESTIMONIAL_TWO = "/media/quiz/depoimento-aluna-2.jpg";
+const TESTIMONIAL_ONE = "/media/quiz/depoimento-aluna-1.webp";
+const TESTIMONIAL_TWO = "/media/quiz/depoimento-aluna-2.webp";
 const OFFER_PATH = "/aula-offer";
 const STORAGE_KEY = "opp-quiz-state";
 
@@ -209,7 +209,7 @@ function QuizFlow() {
 }
 
 function BrandHeader() {
-  return <header className="mx-auto flex w-full max-w-6xl items-center justify-center px-5 py-5 sm:justify-start"><img src={LOGO} alt="O Poder do Parto" className="h-auto w-44 sm:w-52" /></header>;
+  return <header className="mx-auto flex w-full max-w-6xl items-center justify-center px-5 py-5 sm:justify-start"><img src={LOGO} alt="O Poder do Parto" width={900} height={299} className="h-auto w-44 sm:w-52" /></header>;
 }
 
 function Intro({ variant, onStart }: { variant: "A" | "B"; onStart: () => void }) {

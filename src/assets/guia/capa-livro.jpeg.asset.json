@@ -2,10 +2,10 @@
   "version": 1,
   "asset_id": "ed96372c-0800-43a0-a078-f4c06dfa6a99",
   "project_id": "f350638b-f5a0-45c0-b73a-3b2b78e3500a",
-  "url": "/media/guia/ed96372c-0800-43a0-a078-f4c06dfa6a99-capa-livro.jpeg",
-  "r2_key": "a/v1/f350638b-f5a0-45c0-b73a-3b2b78e3500a/ed96372c-0800-43a0-a078-f4c06dfa6a99/capa-livro.jpeg",
-  "original_filename": "capa-livro.jpeg",
-  "size": 246930,
-  "content_type": "image/jpeg",
+  "url": "/media/guia/ed96372c-0800-43a0-a078-f4c06dfa6a99-capa-livro.webp",
+  "r2_key": "media/guia/ed96372c-0800-43a0-a078-f4c06dfa6a99-capa-livro.webp",
+  "original_filename": "capa-livro.webp",
+  "size": 35804,
+  "content_type": "image/webp",
   "created_at": "2026-07-30T16:30:13Z"
 }
