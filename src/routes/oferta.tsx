@@ -97,7 +97,20 @@ const painPoints = [
   "Chegar ao nascimento sem conhecer seus direitos e escolhas",
 ];
 
-const testimonials = [testimonial1, testimonial2, testimonial3, testimonial4, testimonial5, testimonial6, testimonial7, testimonial8, testimonial9];
+// Dimensões intrínsecas reais dos arquivos (ver asset.json) — usadas só para
+// o navegador reservar o espaço certo (evita layout shift no masonry), o
+// tamanho exibido continua controlado pelo CSS (h-auto w-full).
+const testimonials = [
+  { image: testimonial1, width: 739, height: 1256 },
+  { image: testimonial2, width: 900, height: 615 },
+  { image: testimonial3, width: 900, height: 523 },
+  { image: testimonial4, width: 900, height: 293 },
+  { image: testimonial5, width: 900, height: 286 },
+  { image: testimonial6, width: 900, height: 485 },
+  { image: testimonial7, width: 900, height: 912 },
+  { image: testimonial8, width: 900, height: 297 },
+  { image: testimonial9, width: 900, height: 380 },
+];
 
 const comparison = [
   ["Curso O Poder do Parto", true, true],
@@ -280,7 +293,7 @@ function Index() {
         </div></section>
 
         <section data-reveal className="bg-secondary px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Histórias de transformação" title="Depoimentos reais de quem se preparou para esse momento" />
-          <div className="columns-2 gap-3 md:columns-3 md:gap-6">{testimonials.map((image, index) => <figure key={image.asset_id} className="mb-3 break-inside-avoid overflow-hidden rounded-lg bg-background shadow-sm md:mb-6"><img src={image.url} alt={`Depoimento real de aluna do O Poder do Parto ${index + 1}`} loading="lazy" className="h-auto w-full" /></figure>)}</div>
+          <div className="columns-2 gap-3 md:columns-3 md:gap-6">{testimonials.map(({ image, width, height }, index) => <figure key={image.asset_id} className="mb-3 break-inside-avoid overflow-hidden rounded-lg bg-background shadow-sm md:mb-6"><img src={image.url} alt={`Depoimento real de aluna do O Poder do Parto ${index + 1}`} width={width} height={height} loading="lazy" className="h-auto w-full" /></figure>)}</div>
         </div></section>
 
         <section data-reveal id="mari" className="px-4 py-16 md:px-8 md:py-24"><div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
