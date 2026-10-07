@@ -1,0 +1,11 @@
+// Extraído de /oferta para ser carregado sob demanda (só é necessário se a
+// visitante abrir o modal de upgrade).
+import { MessageCircleHeart, CircleCheck } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { offerConfig } from "@/config/offers";
+import { goToCheckout, trackEvent } from "@/lib/tracking";
+
+export default function UpgradeModal({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+  return <Dialog open={open} onOpenChange={onOpenChange}><DialogContent className="max-h-[90vh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-2xl border-primary/20 p-7 md:p-9"><div className="mx-auto grid size-14 place-items-center rounded-full bg-secondary text-primary"><MessageCircleHeart className="size-7" /></div><DialogTitle className="text-center text-2xl font-extrabold leading-tight text-plum">{offerConfig.upgradeModal.title}</DialogTitle><DialogDescription className="text-center text-base leading-relaxed">{offerConfig.upgradeModal.subtitle}</DialogDescription><div className="rounded-2xl bg-secondary p-5 text-center"><p className="text-sm text-muted-foreground line-through">de R$ 97,00</p><p className="mt-1 text-4xl font-extrabold text-plum">por R$ {offerConfig.upgradeModal.differencePrice.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p><p className="mt-2 font-bold text-primary">50% de desconto</p></div><p className="flex gap-3 text-sm leading-relaxed"><CircleCheck className="mt-0.5 size-5 shrink-0 text-primary" />{offerConfig.upgradeModal.includedBenefit}</p><Button className="min-h-14 rounded-2xl bg-accent text-accent-foreground font-extrabold hover:bg-accent/90" onClick={() => { trackEvent("upgrade_accepted", { total_price: offerConfig.upgradeModal.totalPrice }); goToCheckout(offerConfig.upgradeModal.upgradeCheckoutUrl, "essential_upgrade"); }}>SIM, QUERO O PLANO COMPLETO</Button><DialogClose asChild><Button variant="link" className="h-auto whitespace-normal text-sm text-muted-foreground" onClick={() => goToCheckout(offerConfig.essential.checkoutUrl, "essential")}>Não, obrigada. Continuar apenas com o Essencial por R$ 297</Button></DialogClose></DialogContent></Dialog>;
+}

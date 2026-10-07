@@ -1,11 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState, type DetailedHTMLProps, type HTMLAttributes } from "react";
+import { lazy, Suspense, useEffect, useState, type DetailedHTMLProps, type HTMLAttributes } from "react";
 import {
   ArrowRight,
   Baby,
   BookOpen,
   Check,
-  CircleCheck,
   HeartHandshake,
   MessageCircleHeart,
   Play,
@@ -15,9 +14,6 @@ import {
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
-import { SiteFooter } from "@/components/SiteFooter";
 import { offerConfig } from "@/config/offers";
 import { goToCheckout, trackEvent } from "@/lib/tracking";
 import mariPortrait from "@/assets/oferta/mariana-betioli.png.asset.json";
@@ -48,6 +44,12 @@ import bonus4 from "@/assets/oferta/course/bonus-4.jpg.asset.json";
 import bonus5 from "@/assets/oferta/course/bonus-5.jpg.asset.json";
 import bonus6 from "@/assets/oferta/course/bonus-6.jpg.asset.json";
 import bonus7 from "@/assets/oferta/course/bonus-7.jpg.asset.json";
+
+// Abaixo da dobra: carregadas sob demanda para não pesar o bundle inicial.
+const SiteFooter = lazy(() => import("@/components/SiteFooter").then((m) => ({ default: m.SiteFooter })));
+const FaqAccordion = lazy(() => import("@/components/oferta/FaqAccordion"));
+const UpgradeModal = lazy(() => import("@/components/oferta/UpgradeModal"));
+const OrderBumpModal = lazy(() => import("@/components/oferta/OrderBumpModal"));
 
 const VIDEO_SCRIPT_URL = "https://scripts.converteai.net/639563c1-cf70-4484-8d65-6fd485e96ab9/players/6a288cff68519b4d1b50bf92/v4/player.js";
 
@@ -106,13 +108,6 @@ const comparison = [
   ["Acompanhamento durante a gestação, até o parto", false, true],
 ] as const;
 
-const faqs: Array<[string, string]> = [
-  ["Qual é a diferença entre Essencial e Completo?", "O Essencial dá acesso ao curso O Poder do Parto. O Completo inclui todo o conteúdo do Essencial e também o Mari com Você: um canal direto pelo WhatsApp para falar com a Mari durante a gestação, até o parto."],
-  ["Por quanto tempo tenho acesso?", "Os dois planos foram estruturados com acesso vitalício, para você rever o conteúdo sempre que precisar."],
-  ["Posso fazer mesmo estando no final da gestação?", "Sim. As aulas são organizadas para você priorizar os temas mais importantes conforme o momento da sua gestação."],
-  ["O curso substitui o acompanhamento médico?", "Não. O conteúdo é educativo e não substitui pré-natal, consulta, diagnóstico ou orientação da equipe responsável pela sua assistência."],
-  ["Como funciona a garantia?", "Você tem sete dias após a compra para conhecer o conteúdo e solicitar o reembolso, conforme as condições apresentadas no checkout."],
-];
 
 function SectionTitle({ eyebrow, title, text, light = false }: { eyebrow: string; title: string; text?: string; light?: boolean }) {
   return <div className="mx-auto mb-10 max-w-3xl text-center md:mb-14"><p className={`mb-3 text-xs font-extrabold uppercase ${light ? "text-warm" : "text-primary"}`}>{eyebrow}</p><h2 className={`text-3xl font-extrabold leading-tight md:text-5xl ${light ? "text-primary-foreground" : "text-plum"}`}>{title}</h2>{text && <p className={`mx-auto mt-5 max-w-2xl text-base leading-relaxed md:text-lg ${light ? "text-primary-foreground/75" : "text-muted-foreground"}`}>{text}</p>}</div>;
@@ -314,13 +309,13 @@ function Index() {
         <section data-reveal className="bg-warm-soft px-4 py-14 md:px-8"><div className="mx-auto flex max-w-5xl flex-col items-center gap-7 text-center md:flex-row md:text-left"><div className="grid size-24 shrink-0 place-items-center rounded-full border-4 border-primary bg-background text-primary"><ShieldCheck className="size-12" /></div><div><p className="text-xs font-extrabold uppercase text-primary">Seu risco é zero</p><h2 className="mt-2 text-3xl font-extrabold text-plum">Garantia incondicional de 7 dias</h2><p className="mt-3 leading-relaxed text-muted-foreground">Entre, assista às primeiras aulas e conheça a metodologia. Se o curso não fizer sentido para você, solicite o reembolso dentro do prazo, sem burocracia.</p></div></div></section>
 
         <section data-reveal className="bg-muted px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-4xl"><SectionTitle eyebrow="Dúvidas frequentes" title="Antes de escolher" />
-          <Accordion type="single" collapsible className="rounded-2xl border bg-card px-5 md:px-8" onValueChange={(value) => value && trackEvent("faq_open", { question: value })}>{faqs.map(([q,a],i) => <AccordionItem key={q} value={`faq_${i+1}`}><AccordionTrigger className="py-5 text-base font-bold text-plum md:text-lg">{q}</AccordionTrigger><AccordionContent className="pb-5 leading-relaxed text-muted-foreground">{a}</AccordionContent></AccordionItem>)}</Accordion>
+          <Suspense fallback={<div className="h-64 animate-pulse rounded-2xl border bg-card" />}><FaqAccordion /></Suspense>
         </div></section>
 
         <section data-reveal className="bg-plum px-4 py-16 text-center text-primary-foreground md:px-8 md:py-24"><div className="mx-auto max-w-4xl"><Baby className="mx-auto size-12 text-warm" /><h2 className="mt-6 text-3xl font-extrabold leading-tight md:text-5xl">Você não precisa chegar ao parto sem saber o que esperar.</h2><p className="mx-auto mt-5 max-w-2xl text-primary-foreground/75 md:text-lg">Prepare-se com informação confiável, ferramentas práticas e acolhimento para viver esse momento com mais segurança.</p><Button onClick={() => scrollToOffers("final_cta")} className="mt-8 min-h-14 w-full rounded-2xl bg-accent text-accent-foreground px-7 font-extrabold hover:bg-accent/90 sm:w-auto">QUERO COMEÇAR AGORA <ArrowRight /></Button></div></section>
       </main>
 
-      <SiteFooter />
+      <Suspense fallback={null}><SiteFooter /></Suspense>
 
       <div
         className={`safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 px-4 pt-3 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] backdrop-blur transition-transform duration-300 lg:hidden ${showStickyCta ? "translate-y-0" : "translate-y-full"}`}
@@ -337,9 +332,9 @@ function Index() {
         </div>
       </div>
 
-      <Dialog open={upgradeOpen} onOpenChange={setUpgradeOpen}><DialogContent className="max-h-[90vh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-2xl border-primary/20 p-7 md:p-9"><div className="mx-auto grid size-14 place-items-center rounded-full bg-secondary text-primary"><MessageCircleHeart className="size-7" /></div><DialogTitle className="text-center text-2xl font-extrabold leading-tight text-plum">{offerConfig.upgradeModal.title}</DialogTitle><DialogDescription className="text-center text-base leading-relaxed">{offerConfig.upgradeModal.subtitle}</DialogDescription><div className="rounded-2xl bg-secondary p-5 text-center"><p className="text-sm text-muted-foreground line-through">de R$ 97,00</p><p className="mt-1 text-4xl font-extrabold text-plum">por R$ {offerConfig.upgradeModal.differencePrice.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p><p className="mt-2 font-bold text-primary">50% de desconto</p></div><p className="flex gap-3 text-sm leading-relaxed"><CircleCheck className="mt-0.5 size-5 shrink-0 text-primary" />{offerConfig.upgradeModal.includedBenefit}</p><Button className="min-h-14 rounded-2xl bg-accent text-accent-foreground font-extrabold hover:bg-accent/90" onClick={() => { trackEvent("upgrade_accepted", { total_price: offerConfig.upgradeModal.totalPrice }); goToCheckout(offerConfig.upgradeModal.upgradeCheckoutUrl, "essential_upgrade"); }}>SIM, QUERO O PLANO COMPLETO</Button><DialogClose asChild><Button variant="link" className="h-auto whitespace-normal text-sm text-muted-foreground" onClick={() => goToCheckout(offerConfig.essential.checkoutUrl, "essential")}>Não, obrigada. Continuar apenas com o Essencial por R$ 297</Button></DialogClose></DialogContent></Dialog>
+      {upgradeOpen && <Suspense fallback={null}><UpgradeModal open={upgradeOpen} onOpenChange={setUpgradeOpen} /></Suspense>}
 
-      <Dialog open={orderBumpOpen} onOpenChange={setOrderBumpOpen}><DialogContent className="max-h-[90vh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-2xl border-primary/20 p-7 md:p-9"><div className="mx-auto grid size-14 place-items-center rounded-full bg-secondary text-primary"><BookOpen className="size-7" /></div><DialogTitle className="text-center text-2xl font-extrabold leading-tight text-plum">{offerConfig.orderBump.title}</DialogTitle><DialogDescription className="text-center text-base leading-relaxed">Antes de continuar, adicione este material objetivo ao seu Plano Completo.</DialogDescription><div className="rounded-2xl border border-primary/20 bg-secondary p-5"><p className="text-center text-lg font-extrabold leading-snug text-plum">{offerConfig.orderBump.name}</p><p className="mt-3 text-center text-4xl font-extrabold text-primary">R$ {offerConfig.orderBump.price},00</p></div><p className="flex gap-3 text-sm leading-relaxed text-muted-foreground"><CircleCheck className="mt-0.5 size-5 shrink-0 text-primary" />Leve perguntas essenciais organizadas para conversar com seu obstetra com mais clareza.</p><Button className="min-h-14 whitespace-normal rounded-2xl bg-accent text-accent-foreground font-extrabold hover:bg-accent/90" onClick={() => { trackEvent("order_bump_accepted", { product: "guia_18_perguntas", price: 27 }); goToCheckout(offerConfig.orderBump.checkoutUrl, "complete_with_guide"); }}>SIM, QUERO ADICIONAR O GUIA POR R$ 27</Button><DialogClose asChild><Button variant="link" className="h-auto whitespace-normal text-sm text-muted-foreground" onClick={() => { trackEvent("order_bump_declined", { product: "guia_18_perguntas" }); goToCheckout(offerConfig.complete.checkoutUrl, "complete"); }}>Não, obrigada. Continuar somente com o Plano Completo</Button></DialogClose></DialogContent></Dialog>
+      {orderBumpOpen && <Suspense fallback={null}><OrderBumpModal open={orderBumpOpen} onOpenChange={setOrderBumpOpen} /></Suspense>}
     </div>
   );
 }
