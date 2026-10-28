@@ -282,19 +282,22 @@ function Index() {
           <div><p className="text-xs font-extrabold uppercase text-primary">Sua especialista</p><h2 className="mt-3 text-4xl font-extrabold text-plum md:text-5xl">Mari Betioli</h2><p className="mt-3 text-lg font-bold text-primary">19 anos dedicados à assistência ao parto e à saúde da mulher</p><p className="mt-6 leading-relaxed text-muted-foreground">Com experiência no Brasil, em Portugal e nos Estados Unidos, Mariana acompanhou mulheres em casas de parto, hospitais e partos domiciliares. Sua missão é tornar o conhecimento acessível para que cada família participe do nascimento com mais consciência e respeito.</p><blockquote className="mt-7 border-l-4 border-warm pl-5 text-xl font-semibold leading-relaxed text-plum">“Preparar-se não é buscar um parto perfeito. É construir recursos para viver cada escolha com informação, apoio e protagonismo.”</blockquote></div>
         </div></section>
 
-        <section data-reveal id="ofertas" className="scroll-mt-20 px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-5xl"><SectionTitle eyebrow="Escolha sua experiência" title="Qual preparação combina com você?" text="O curso completo para você viver o nascimento do seu bebê com mais consciência, confiança e protagonismo." />
-          <div className="mx-auto max-w-md pt-3">
-            <article className="relative flex flex-col rounded-2xl border-2 border-border bg-card p-7 md:p-9">
+        <section data-reveal id="ofertas" className="scroll-mt-20 px-4 py-8 md:px-8 md:py-16"><div className="mx-auto max-w-5xl">
+          <div className="mx-auto mb-5 max-w-3xl text-center">
+            <p className="mb-2 text-xs font-extrabold uppercase text-primary">Escolha sua experiência</p>
+            <h2 className="text-2xl font-extrabold leading-tight text-plum sm:text-3xl">Qual preparação combina com você?</h2>
+          </div>
+          <div className="mx-auto max-w-md">
+            <article className="relative flex flex-col rounded-2xl border-2 border-border bg-card p-5 md:p-9">
               <p className="text-sm font-bold text-primary">PLANO ÚNICO</p>
-              <h3 className="mt-2 text-2xl font-extrabold">Poder do Parto</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Para compreender o parto, reconhecer escolhas e chegar mais preparada.</p>
-              <div className="mt-7"><div className="flex flex-wrap items-baseline gap-2"><span className="text-lg font-bold">{offerConfig.essential.installmentCount}x</span><span className="text-4xl font-extrabold md:text-5xl">R$ {offerConfig.essential.installmentPrice}<span className="align-top text-base md:text-lg">*</span></span></div><p className="mt-2 text-sm">ou <strong>R$ {offerConfig.essential.price},00</strong> à vista</p></div>
-              <div className="my-7 h-px bg-current opacity-15" />
-              <ul className="flex-1 space-y-4">{offerConfig.essential.features.map(feature => <li key={feature} className="flex gap-3 text-sm leading-relaxed"><Check className="mt-0.5 size-5 shrink-0 text-primary" />{feature}</li>)}</ul>
-              <Button onClick={buyNow} className="mt-8 min-h-14 rounded-2xl bg-accent text-accent-foreground font-extrabold hover:bg-accent/90">Compra Agora!</Button>
-              <small className="mt-3 text-center text-muted-foreground">Garantia incondicional de 7 dias</small>
+              <h3 className="mt-1 text-2xl font-extrabold">Poder do Parto</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Para compreender o parto, reconhecer escolhas e chegar mais preparada.</p>
+              <div className="mt-4"><div className="flex flex-wrap items-baseline gap-2"><span className="text-lg font-bold">{offerConfig.essential.installmentCount}x</span><span className="text-4xl font-extrabold md:text-5xl">R$ {offerConfig.essential.installmentPrice}<span className="align-top text-base md:text-lg">*</span></span></div><p className="mt-1 text-sm">ou <strong>R$ {offerConfig.essential.price},00</strong> à vista</p></div>
+              <div className="my-4 h-px bg-current opacity-15" />
+              <ul className="flex-1 space-y-2">{offerConfig.essential.features.map(feature => <li key={feature} className="flex gap-2 text-sm leading-snug"><Check className="mt-0.5 size-5 shrink-0 text-primary" />{feature}</li>)}</ul>
+              <Button onClick={buyNow} className="mt-5 min-h-14 rounded-2xl bg-accent text-accent-foreground font-extrabold hover:bg-accent/90">Compra Agora!</Button>
             </article>
-          </div><p className="mt-5 text-center text-xs text-muted-foreground">*Parcelamento com acréscimo da plataforma. Consulte as condições no checkout.</p>
+          </div><p className="mt-3 text-center text-xs text-muted-foreground">*Parcelamento com acréscimo da plataforma. Consulte as condições no checkout.</p>
         </div></section>
 
         <section data-reveal className="bg-warm-soft px-4 py-14 md:px-8"><div className="mx-auto flex max-w-5xl flex-col items-center gap-7 text-center md:flex-row md:text-left"><div className="grid size-24 shrink-0 place-items-center rounded-full border-4 border-primary bg-background text-primary"><ShieldCheck className="size-12" /></div><div><p className="text-xs font-extrabold uppercase text-primary">Seu risco é zero</p><h2 className="mt-2 text-3xl font-extrabold text-plum">Garantia incondicional de 7 dias</h2><p className="mt-3 leading-relaxed text-muted-foreground">Entre, assista às primeiras aulas e conheça a metodologia. Se o curso não fizer sentido para você, solicite o reembolso dentro do prazo, sem burocracia.</p></div></div></section>
