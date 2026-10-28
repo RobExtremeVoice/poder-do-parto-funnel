@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AulaRouteImport } from './routes/aula'
 import { Route as AulaOfferRouteImport } from './routes/aula-offer'
+import { Route as Aula_dRouteImport } from './routes/aula_d'
 import { Route as GuiaRouteImport } from './routes/guia'
 import { Route as OfertaRouteImport } from './routes/oferta'
 import { Route as QuizRouteImport } from './routes/quiz'
@@ -31,6 +32,11 @@ const AulaRoute = AulaRouteImport.update({
 const AulaOfferRoute = AulaOfferRouteImport.update({
   id: '/aula-offer',
   path: '/aula-offer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Aula_dRoute = Aula_dRouteImport.update({
+  id: '/aula_d',
+  path: '/aula_d',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuiaRoute = GuiaRouteImport.update({
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aula': typeof AulaRoute
   '/aula-offer': typeof AulaOfferRoute
+  '/aula_d': typeof Aula_dRoute
   '/guia': typeof GuiaRouteWithChildren
   '/oferta': typeof OfertaRoute
   '/quiz': typeof QuizRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/aula': typeof AulaRoute
   '/aula-offer': typeof AulaOfferRoute
+  '/aula_d': typeof Aula_dRoute
   '/oferta': typeof OfertaRoute
   '/quiz': typeof QuizRoute
   '/guia/obrigado': typeof GuiaObrigadoRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/aula': typeof AulaRoute
   '/aula-offer': typeof AulaOfferRoute
+  '/aula_d': typeof Aula_dRoute
   '/guia': typeof GuiaRouteWithChildren
   '/oferta': typeof OfertaRoute
   '/quiz': typeof QuizRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
     | '/'
     | '/aula'
     | '/aula-offer'
+    | '/aula_d'
     | '/guia'
     | '/oferta'
     | '/quiz'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
     | '/'
     | '/aula'
     | '/aula-offer'
+    | '/aula_d'
     | '/oferta'
     | '/quiz'
     | '/guia/obrigado'
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
     | '/'
     | '/aula'
     | '/aula-offer'
+    | '/aula_d'
     | '/guia'
     | '/oferta'
     | '/quiz'
@@ -125,6 +137,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AulaRoute: typeof AulaRoute
   AulaOfferRoute: typeof AulaOfferRoute
+  Aula_dRoute: typeof Aula_dRoute
   GuiaRoute: typeof GuiaRouteWithChildren
   OfertaRoute: typeof OfertaRoute
   QuizRoute: typeof QuizRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       path: '/aula-offer'
       fullPath: '/aula-offer'
       preLoaderRoute: typeof AulaOfferRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aula_d': {
+      id: '/aula_d'
+      path: '/aula_d'
+      fullPath: '/aula_d'
+      preLoaderRoute: typeof Aula_dRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guia': {
@@ -207,6 +227,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AulaRoute: AulaRoute,
   AulaOfferRoute: AulaOfferRoute,
+  Aula_dRoute: Aula_dRoute,
   GuiaRoute: GuiaRouteWithChildren,
   OfertaRoute: OfertaRoute,
   QuizRoute: QuizRoute,
