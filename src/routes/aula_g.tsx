@@ -284,8 +284,8 @@ function Index() {
 
         <section data-reveal id="ofertas" className="scroll-mt-20 px-4 py-8 md:px-8 md:py-16"><div className="mx-auto max-w-5xl">
           <div className="mx-auto mb-5 max-w-3xl text-center">
-            <p className="mb-2 text-xs font-extrabold uppercase text-primary">Escolha sua experiência</p>
-            <h2 className="text-2xl font-extrabold leading-tight text-plum sm:text-3xl">Qual preparação combina com você?</h2>
+            <p className="mb-2 text-xs font-extrabold uppercase text-primary">Sua preparação completa</p>
+            <h2 className="text-2xl font-extrabold leading-tight text-plum sm:text-3xl">Tudo que você precisa para viver esse momento com confiança</h2>
           </div>
           <div className="mx-auto max-w-md">
             <article className="relative flex flex-col rounded-2xl border-2 border-border bg-card p-5 md:p-9">
