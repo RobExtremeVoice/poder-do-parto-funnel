@@ -238,18 +238,16 @@ function Index() {
               {videoStatus !== "idle" && (
                 <iframe
                   title="Vídeo: O Poder do Parto"
-                  src="about:blank"
+                  // O iframe só é montado depois do clique (lazy por natureza),
+                  // então já renderiza direto com a URL final — nada de
+                  // about:blank + swap no onLoad (esse evento não é confiável
+                  // em iframe via React: o load do about:blank pode disparar
+                  // antes do listener ser anexado, perdendo o troca).
+                  src={`${VIDEO_EMBED_URL}${window.location.search || "?"}&vl=${encodeURIComponent(window.location.href)}`}
                   frameBorder={0}
                   allowFullScreen
                   referrerPolicy="origin"
                   className="absolute inset-0 block h-full w-full"
-                  onLoad={(event) => {
-                    const iframe = event.currentTarget;
-                    if (iframe.dataset.swapped) return;
-                    iframe.dataset.swapped = "1";
-                    const vl = encodeURIComponent(window.location.href);
-                    iframe.src = `${VIDEO_EMBED_URL}${window.location.search || "?"}&vl=${vl}`;
-                  }}
                 />
               )}
               {videoStatus !== "ready" && <div className="absolute inset-0 bg-plum text-primary-foreground">
