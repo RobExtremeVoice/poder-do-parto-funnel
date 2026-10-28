@@ -213,7 +213,6 @@ function Index() {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <div className="bg-plum px-4 py-2 text-center text-xs font-semibold text-primary-foreground sm:text-sm">Preparação completa para gestantes e seus acompanhantes • SUS e Particular</div>
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center px-4 md:h-20 md:px-8">
           <Brand />
