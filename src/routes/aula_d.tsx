@@ -12,11 +12,11 @@ import {
   Users,
   X,
 } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { offerConfig } from "@/config/offers";
 import { goToCheckout, trackEvent } from "@/lib/tracking";
 import mariPortrait from "@/assets/oferta/mariana-betioli.png.asset.json";
-import mariComVoce from "@/assets/mari-com-voce.png.asset.json";
 import brandLogo from "@/assets/oferta/o-poder-do-parto.png.asset.json";
 import brandLogoWhite from "@/assets/oferta/o-poder-do-parto-white.png.asset.json";
 import testimonial1 from "@/assets/oferta/testimonials/testimonial-1.jpg.asset.json";
@@ -46,9 +46,6 @@ import bonus7 from "@/assets/oferta/course/bonus-7.jpg.asset.json";
 
 // Abaixo da dobra: carregadas sob demanda para não pesar o bundle inicial.
 const SiteFooter = lazy(() => import("@/components/SiteFooter").then((m) => ({ default: m.SiteFooter })));
-const FaqAccordion = lazy(() => import("@/components/oferta/FaqAccordion"));
-const UpgradeModal = lazy(() => import("@/components/oferta/UpgradeModal"));
-const OrderBumpModal = lazy(() => import("@/components/oferta/OrderBumpModal"));
 
 // Nova VSL (/aula_d): player via iframe (embed.html), formato vertical 9:16.
 const VIDEO_SCRIPT_URL = "https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js";
@@ -113,14 +110,15 @@ const testimonials = [
   { image: testimonial9, width: 900, height: 380 },
 ];
 
-const comparison = [
-  ["Curso O Poder do Parto", true, true],
-  ["8 módulos de preparação", true, true],
-  ["Acesso vitalício", true, true],
-  ["Mari com Você: canal direto pelo WhatsApp", false, true],
-  ["Mensagens de texto e áudio", false, true],
-  ["Acompanhamento durante a gestação, até o parto", false, true],
-] as const;
+// Plano único (sem Essencial/Completo) — perguntas ajustadas para não
+// mencionar comparação entre planos.
+const faqs: Array<[string, string]> = [
+  ["O que está incluído no Poder do Parto?", "Acesso ao curso completo, com 9 módulos e mais de 70 aulas, além dos 7 bônus exclusivos e materiais de apoio para download."],
+  ["Por quanto tempo tenho acesso?", "O acesso é vitalício, para você rever o conteúdo sempre que precisar."],
+  ["Posso fazer mesmo estando no final da gestação?", "Sim. As aulas são organizadas para você priorizar os temas mais importantes conforme o momento da sua gestação."],
+  ["O curso substitui o acompanhamento médico?", "Não. O conteúdo é educativo e não substitui pré-natal, consulta, diagnóstico ou orientação da equipe responsável pela sua assistência."],
+  ["Como funciona a garantia?", "Você tem sete dias após a compra para conhecer o conteúdo e solicitar o reembolso, conforme as condições apresentadas no checkout."],
+];
 
 
 function SectionTitle({ eyebrow, title, text, light = false }: { eyebrow: string; title: string; text?: string; light?: boolean }) {
@@ -133,8 +131,6 @@ function Brand({ light = false }: { light?: boolean }) {
 }
 
 function Index() {
-  const [upgradeOpen, setUpgradeOpen] = useState(false);
-  const [orderBumpOpen, setOrderBumpOpen] = useState(false);
   const [videoStatus, setVideoStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
   const [slowConnection, setSlowConnection] = useState(false);
   const [showStickyCta, setShowStickyCta] = useState(false);
@@ -198,17 +194,9 @@ function Index() {
     document.getElementById("ofertas")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const chooseEssential = () => {
-    trackEvent("plan_selected", { plan: "essential" });
-    trackEvent("upgrade_modal_view", { from_plan: "essential" });
-    setUpgradeOpen(true);
-  };
-
-  const showCompleteOrderBump = (source: string) => {
-    trackEvent("plan_selected", { plan: "complete", source });
-    trackEvent("order_bump_view", { product: "guia_18_perguntas", price: offerConfig.orderBump.price });
-    setUpgradeOpen(false);
-    setOrderBumpOpen(true);
+  const buyNow = () => {
+    trackEvent("plan_selected", { plan: "essential", location: "pricing" });
+    goToCheckout(offerConfig.essential.checkoutUrl, "essential");
   };
 
   return (
@@ -294,28 +282,25 @@ function Index() {
           <div><p className="text-xs font-extrabold uppercase text-primary">Sua especialista</p><h2 className="mt-3 text-4xl font-extrabold text-plum md:text-5xl">Mari Betioli</h2><p className="mt-3 text-lg font-bold text-primary">19 anos dedicados à assistência ao parto e à saúde da mulher</p><p className="mt-6 leading-relaxed text-muted-foreground">Com experiência no Brasil, em Portugal e nos Estados Unidos, Mariana acompanhou mulheres em casas de parto, hospitais e partos domiciliares. Sua missão é tornar o conhecimento acessível para que cada família participe do nascimento com mais consciência e respeito.</p><blockquote className="mt-7 border-l-4 border-warm pl-5 text-xl font-semibold leading-relaxed text-plum">“Preparar-se não é buscar um parto perfeito. É construir recursos para viver cada escolha com informação, apoio e protagonismo.”</blockquote></div>
         </div></section>
 
-        <section data-reveal id="ofertas" className="scroll-mt-20 px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-5xl"><SectionTitle eyebrow="Escolha sua experiência" title="Qual preparação combina com você?" text="Os dois planos oferecem o curso completo. No plano Completo, você também conta com um canal direto com a Mari durante a gestação." />
-          <div className="grid items-stretch gap-8 pt-3 md:grid-cols-2">
-            <PlanCard plan="essential" onChoose={chooseEssential} />
-            <PlanCard plan="complete" featured onChoose={() => showCompleteOrderBump("pricing")} />
+        <section data-reveal id="ofertas" className="scroll-mt-20 px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-5xl"><SectionTitle eyebrow="Escolha sua experiência" title="Qual preparação combina com você?" text="O curso completo para você viver o nascimento do seu bebê com mais consciência, confiança e protagonismo." />
+          <div className="mx-auto max-w-md pt-3">
+            <article className="relative flex flex-col rounded-2xl border-2 border-border bg-card p-7 md:p-9">
+              <p className="text-sm font-bold text-primary">PLANO ÚNICO</p>
+              <h3 className="mt-2 text-2xl font-extrabold">Poder do Parto</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Para compreender o parto, reconhecer escolhas e chegar mais preparada.</p>
+              <div className="mt-7"><div className="flex flex-wrap items-baseline gap-2"><span className="text-lg font-bold">{offerConfig.essential.installmentCount}x</span><span className="text-4xl font-extrabold md:text-5xl">R$ {offerConfig.essential.installmentPrice}<span className="align-top text-base md:text-lg">*</span></span></div><p className="mt-2 text-sm">ou <strong>R$ {offerConfig.essential.price},00</strong> à vista</p></div>
+              <div className="my-7 h-px bg-current opacity-15" />
+              <ul className="flex-1 space-y-4">{offerConfig.essential.features.map(feature => <li key={feature} className="flex gap-3 text-sm leading-relaxed"><Check className="mt-0.5 size-5 shrink-0 text-primary" />{feature}</li>)}</ul>
+              <Button onClick={buyNow} className="mt-8 min-h-14 rounded-2xl bg-accent text-accent-foreground font-extrabold hover:bg-accent/90">Compra Agora!</Button>
+              <small className="mt-3 text-center text-muted-foreground">Garantia incondicional de 7 dias</small>
+            </article>
           </div><p className="mt-5 text-center text-xs text-muted-foreground">*Parcelamento com acréscimo da plataforma. Consulte as condições no checkout.</p>
-        </div></section>
-
-        <section data-reveal className="px-4 pb-16 md:px-8 md:pb-24"><div className="mx-auto max-w-5xl"><SectionTitle eyebrow="Compare com calma" title="Veja a diferença entre os planos" />
-          <div className="overflow-hidden rounded-lg border bg-card shadow-sm">
-            <table className="w-full table-fixed text-left text-[0.78rem] sm:text-base">
-              <caption className="sr-only">Comparação dos benefícios dos planos Essencial e Completo</caption>
-              <colgroup><col className="w-[52%] sm:w-[47%]" /><col className="w-[24%] sm:w-[26.5%]" /><col className="w-[24%] sm:w-[26.5%]" /></colgroup>
-              <thead className="bg-muted"><tr><th scope="col" className="p-3 font-bold sm:p-5">O que você recebe</th><th scope="col" className="border-l p-2 text-center font-bold sm:p-5">Essencial</th><th scope="col" className="border-l p-2 text-center font-bold sm:p-5">Completo</th></tr></thead>
-              <tbody>{comparison.map(([label, essential, complete]) => <tr key={label} className="border-t"><th scope="row" className="p-3 font-medium leading-snug sm:p-5">{label}</th>{[essential, complete].map((included, index) => <td key={`${label}-${index}`} className="border-l p-2 text-center sm:p-5"><span className="sr-only">{included ? "Incluído" : "Não incluído"}</span>{included ? <Check className="mx-auto size-5 text-primary" strokeWidth={3} aria-hidden="true" /> : <span aria-hidden="true" className="text-muted-foreground">—</span>}</td>)}</tr>)}</tbody>
-            </table>
-          </div>
         </div></section>
 
         <section data-reveal className="bg-warm-soft px-4 py-14 md:px-8"><div className="mx-auto flex max-w-5xl flex-col items-center gap-7 text-center md:flex-row md:text-left"><div className="grid size-24 shrink-0 place-items-center rounded-full border-4 border-primary bg-background text-primary"><ShieldCheck className="size-12" /></div><div><p className="text-xs font-extrabold uppercase text-primary">Seu risco é zero</p><h2 className="mt-2 text-3xl font-extrabold text-plum">Garantia incondicional de 7 dias</h2><p className="mt-3 leading-relaxed text-muted-foreground">Entre, assista às primeiras aulas e conheça a metodologia. Se o curso não fizer sentido para você, solicite o reembolso dentro do prazo, sem burocracia.</p></div></div></section>
 
         <section data-reveal className="bg-muted px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-4xl"><SectionTitle eyebrow="Dúvidas frequentes" title="Antes de escolher" />
-          <Suspense fallback={<div className="h-64 animate-pulse rounded-2xl border bg-card" />}><FaqAccordion /></Suspense>
+          <Accordion type="single" collapsible className="rounded-2xl border bg-card px-5 md:px-8" onValueChange={(value) => value && trackEvent("faq_open", { question: value })}>{faqs.map(([q,a],i) => <AccordionItem key={q} value={`faq_${i+1}`}><AccordionTrigger className="py-5 text-base font-bold text-plum md:text-lg">{q}</AccordionTrigger><AccordionContent className="pb-5 leading-relaxed text-muted-foreground">{a}</AccordionContent></AccordionItem>)}</Accordion>
         </div></section>
 
         <section data-reveal className="bg-plum px-4 py-16 text-center text-primary-foreground md:px-8 md:py-24"><div className="mx-auto max-w-4xl"><Baby className="mx-auto size-12 text-warm" /><h2 className="mt-6 text-3xl font-extrabold leading-tight md:text-5xl">Você não precisa chegar ao parto sem saber o que esperar.</h2><p className="mx-auto mt-5 max-w-2xl text-primary-foreground/75 md:text-lg">Prepare-se com informação confiável, ferramentas práticas e acolhimento para viver esse momento com mais segurança.</p><Button onClick={() => scrollToOffers("final_cta")} className="mt-8 min-h-14 w-full rounded-2xl bg-accent text-accent-foreground px-7 font-extrabold hover:bg-accent/90 sm:w-auto">QUERO COMEÇAR AGORA <ArrowRight /></Button></div></section>
@@ -337,15 +322,6 @@ function Index() {
           </Button>
         </div>
       </div>
-
-      {upgradeOpen && <Suspense fallback={null}><UpgradeModal open={upgradeOpen} onOpenChange={setUpgradeOpen} /></Suspense>}
-
-      {orderBumpOpen && <Suspense fallback={null}><OrderBumpModal open={orderBumpOpen} onOpenChange={setOrderBumpOpen} /></Suspense>}
     </div>
   );
-}
-
-function PlanCard({ plan, featured = false, onChoose }: { plan: "essential" | "complete"; featured?: boolean; onChoose: () => void }) {
-  const data = offerConfig[plan];
-  return <article className={`relative flex flex-col rounded-2xl border-2 p-7 md:p-9 ${featured ? "border-primary bg-plum text-primary-foreground shadow-2xl md:-translate-y-2" : "border-border bg-card"}`}>{featured && <span className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-warm px-4 py-2 text-xs font-extrabold text-plum">{offerConfig.complete.tag}</span>}<p className={`text-sm font-bold ${featured ? "text-warm" : "text-primary"}`}>PLANO {plan === "complete" ? "COMPLETO" : "ESSENCIAL"}</p><h3 className="mt-2 text-2xl font-extrabold">{data.name}</h3><p className={`mt-3 text-sm leading-relaxed ${featured ? "text-primary-foreground/75" : "text-muted-foreground"}`}>{plan === "complete" ? "Todo o curso e a tranquilidade de poder falar diretamente com a Mari durante a gestação." : "Para compreender o parto, reconhecer escolhas e chegar mais preparada."}</p><div className="mt-7 flex items-center justify-between gap-4"><div><div className="flex flex-wrap items-baseline gap-2"><span className="text-lg font-bold">{data.installmentCount}x</span><span className="text-4xl font-extrabold md:text-5xl">R$ {data.installmentPrice}<span className="align-top text-base md:text-lg">*</span></span></div><p className="mt-2 text-sm">ou <strong>R$ {data.price},00</strong> à vista</p></div>{featured && <img src={mariComVoce.url} alt="Mari com Você — acompanhamento individual pelo WhatsApp até o parto" className="size-20 shrink-0 rounded-lg border border-primary-foreground/20 object-cover sm:size-24 xl:size-[192px]" loading="lazy" />}</div><div className="my-7 h-px bg-current opacity-15" /><ul className="flex-1 space-y-4">{data.features.map(feature => <li key={feature} className="flex gap-3 text-sm leading-relaxed"><Check className={`mt-0.5 size-5 shrink-0 ${featured ? "text-warm" : "text-primary"}`} />{feature}</li>)}</ul><Button onClick={onChoose} variant={featured ? "default" : "outline"} className={`mt-8 min-h-14 rounded-2xl font-extrabold ${featured ? "bg-accent text-accent-foreground hover:bg-accent/90" : "border-primary text-primary hover:bg-secondary"}`}>{featured ? "QUERO A PREPARAÇÃO COMPLETA" : "ESCOLHER O ESSENCIAL"}</Button><small className={`mt-3 text-center ${featured ? "text-primary-foreground/70" : "text-muted-foreground"}`}>Garantia incondicional de 7 dias</small></article>;
 }
