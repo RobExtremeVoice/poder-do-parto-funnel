@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { lazy, Suspense, useEffect, useState, type DetailedHTMLProps, type HTMLAttributes } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
   ArrowRight,
   Baby,
@@ -51,7 +51,9 @@ const FaqAccordion = lazy(() => import("@/components/oferta/FaqAccordion"));
 const UpgradeModal = lazy(() => import("@/components/oferta/UpgradeModal"));
 const OrderBumpModal = lazy(() => import("@/components/oferta/OrderBumpModal"));
 
-const VIDEO_SCRIPT_URL = "https://scripts.converteai.net/639563c1-cf70-4484-8d65-6fd485e96ab9/players/6a288cff68519b4d1b50bf92/v4/player.js";
+// Nova VSL (/aula_d): player via iframe (embed.html), formato vertical 9:16.
+const VIDEO_SCRIPT_URL = "https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js";
+const VIDEO_EMBED_URL = "https://scripts.converteai.net/639563c1-cf70-4484-8d65-6fd485e96ab9/players/6ae14b616efe4af039121772/v4/embed.html";
 
 export const Route = createFileRoute("/aula_d")({
   head: () => ({
@@ -180,30 +182,16 @@ function Index() {
     setVideoStatus("loading");
     trackEvent("video_load_requested", { connection: slowConnection ? "slow_or_data_saver" : "standard" });
 
-    const finishLoading = () => {
-      window.customElements.whenDefined("vturb-smartplayer").then(() => setVideoStatus("ready"));
-    };
-    if (window.customElements.get("vturb-smartplayer")) {
-      setVideoStatus("ready");
-      return;
-    }
-
-    const existingScript = document.querySelector<HTMLScriptElement>(`script[src="${VIDEO_SCRIPT_URL}"]`);
-    if (existingScript) {
-      existingScript.addEventListener("load", finishLoading, { once: true });
-      existingScript.addEventListener("error", () => setVideoStatus("error"), { once: true });
-    } else {
+    // SDK do player (não bloqueia a renderização do iframe — ele carrega o
+    // próprio conteúdo via embed.html independente disso).
+    if (!document.querySelector<HTMLScriptElement>(`script[src="${VIDEO_SCRIPT_URL}"]`)) {
       const script = document.createElement("script");
       script.src = VIDEO_SCRIPT_URL;
       script.async = true;
-      script.onload = finishLoading;
-      script.onerror = () => setVideoStatus("error");
       document.head.appendChild(script);
     }
 
-    window.setTimeout(() => {
-      if (!window.customElements.get("vturb-smartplayer")) setVideoStatus("error");
-    }, 15000);
+    setVideoStatus("ready");
   };
 
   const scrollToOffers = (location: string) => {
@@ -246,8 +234,24 @@ function Index() {
             <h1 className="mx-auto max-w-4xl text-[1.6rem] font-extrabold leading-[1.15] text-plum sm:text-3xl lg:text-4xl">Prepare-se para viver o nascimento do seu bebê com mais consciência, confiança e protagonismo</h1>
             <p className="mx-auto mt-2 max-w-3xl text-[0.8rem] leading-relaxed text-muted-foreground sm:text-sm">Da gestação ao pós-parto: entenda o trabalho de parto, conheça seus direitos e prepare um acompanhante verdadeiramente ativo.</p>
             <p className="mx-auto mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-primary sm:text-sm"><Users className="size-4" />Mais de 1.700 mulheres já se prepararam com a Mari</p>
-            <div className="relative mx-auto mt-3 aspect-video w-full max-w-[38rem] overflow-hidden rounded-2xl border-4 border-background bg-plum shadow-2xl">
-              {videoStatus !== "idle" && <vturb-smartplayer id="vid-6a288cff68519b4d1b50bf92" className="block h-full w-full" />}
+            <div className="relative mx-auto mt-3 aspect-[9/16] w-full max-w-[400px] overflow-hidden rounded-2xl border-4 border-background bg-plum shadow-2xl">
+              {videoStatus !== "idle" && (
+                <iframe
+                  title="Vídeo: O Poder do Parto"
+                  src="about:blank"
+                  frameBorder={0}
+                  allowFullScreen
+                  referrerPolicy="origin"
+                  className="absolute inset-0 block h-full w-full"
+                  onLoad={(event) => {
+                    const iframe = event.currentTarget;
+                    if (iframe.dataset.swapped) return;
+                    iframe.dataset.swapped = "1";
+                    const vl = encodeURIComponent(window.location.href);
+                    iframe.src = `${VIDEO_EMBED_URL}${window.location.search || "?"}&vl=${vl}`;
+                  }}
+                />
+              )}
               {videoStatus !== "ready" && <div className="absolute inset-0 bg-plum text-primary-foreground">
                 <img src={videoPoster.url} alt="Mariana Betioli apresentando O Poder do Parto" width={640} height={360} fetchPriority="high" className="h-full w-full object-cover" />
                 <div className="absolute inset-0 bg-foreground/25" />
@@ -355,12 +359,4 @@ function Index() {
 function PlanCard({ plan, featured = false, onChoose }: { plan: "essential" | "complete"; featured?: boolean; onChoose: () => void }) {
   const data = offerConfig[plan];
   return <article className={`relative flex flex-col rounded-2xl border-2 p-7 md:p-9 ${featured ? "border-primary bg-plum text-primary-foreground shadow-2xl md:-translate-y-2" : "border-border bg-card"}`}>{featured && <span className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-warm px-4 py-2 text-xs font-extrabold text-plum">{offerConfig.complete.tag}</span>}<p className={`text-sm font-bold ${featured ? "text-warm" : "text-primary"}`}>PLANO {plan === "complete" ? "COMPLETO" : "ESSENCIAL"}</p><h3 className="mt-2 text-2xl font-extrabold">{data.name}</h3><p className={`mt-3 text-sm leading-relaxed ${featured ? "text-primary-foreground/75" : "text-muted-foreground"}`}>{plan === "complete" ? "Todo o curso e a tranquilidade de poder falar diretamente com a Mari durante a gestação." : "Para compreender o parto, reconhecer escolhas e chegar mais preparada."}</p><div className="mt-7 flex items-center justify-between gap-4"><div><div className="flex flex-wrap items-baseline gap-2"><span className="text-lg font-bold">{data.installmentCount}x</span><span className="text-4xl font-extrabold md:text-5xl">R$ {data.installmentPrice}<span className="align-top text-base md:text-lg">*</span></span></div><p className="mt-2 text-sm">ou <strong>R$ {data.price},00</strong> à vista</p></div>{featured && <img src={mariComVoce.url} alt="Mari com Você — acompanhamento individual pelo WhatsApp até o parto" className="size-20 shrink-0 rounded-lg border border-primary-foreground/20 object-cover sm:size-24 xl:size-[192px]" loading="lazy" />}</div><div className="my-7 h-px bg-current opacity-15" /><ul className="flex-1 space-y-4">{data.features.map(feature => <li key={feature} className="flex gap-3 text-sm leading-relaxed"><Check className={`mt-0.5 size-5 shrink-0 ${featured ? "text-warm" : "text-primary"}`} />{feature}</li>)}</ul><Button onClick={onChoose} variant={featured ? "default" : "outline"} className={`mt-8 min-h-14 rounded-2xl font-extrabold ${featured ? "bg-accent text-accent-foreground hover:bg-accent/90" : "border-primary text-primary hover:bg-secondary"}`}>{featured ? "QUERO A PREPARAÇÃO COMPLETA" : "ESCOLHER O ESSENCIAL"}</Button><small className={`mt-3 text-center ${featured ? "text-primary-foreground/70" : "text-muted-foreground"}`}>Garantia incondicional de 7 dias</small></article>;
-}
-
-declare module "react" {
-  namespace JSX {
-    interface IntrinsicElements {
-      "vturb-smartplayer": DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>;
-    }
-  }
 }
